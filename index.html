@@ -6,18 +6,17 @@
 <title>SciComm Lab</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root {
-  --navy:#0F1B2D; --navy-mid:#162236; --navy-light:#1E3150;
-  --indigo:#4F46E5; --indigo-light:#6366F1;
-  --amber:#F59E0B; --amber-light:#FCD34D;
-  --teal:#14B8A6; --rose:#F43F5E;
-  --slate:#94A3B8; --slate-light:#CBD5E1;
-  --text:#E2E8F0;
+:root{
+  --navy:#0F1B2D;--navy-mid:#162236;--navy-light:#1E3150;
+  --indigo:#4F46E5;--indigo-light:#6366F1;
+  --amber:#F59E0B;--amber-light:#FCD34D;
+  --teal:#14B8A6;--rose:#F43F5E;--green:#22C55E;
+  --slate:#94A3B8;--slate-light:#CBD5E1;--text:#E2E8F0;
 }
 @media(prefers-color-scheme:light){
-  :root{ --navy:#F8FAFC;--navy-mid:#F1F5F9;--navy-light:#E2E8F0;--text:#0F1B2D;--slate:#475569;--slate-light:#334155; }
+  :root{--navy:#F8FAFC;--navy-mid:#F1F5F9;--navy-light:#E2E8F0;--text:#0F1B2D;--slate:#475569;--slate-light:#334155;}
 }
-*{margin:0;padding:0;box-sizing:border-box}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 body{font-family:'Inter',sans-serif;background:var(--navy);color:var(--text);min-height:100vh;overflow-x:hidden}
 h1,h2,h3{font-family:'Space Grotesk',sans-serif}
 .screen{display:none;min-height:100vh}
@@ -26,11 +25,13 @@ h1,h2,h3{font-family:'Space Grotesk',sans-serif}
 .btn-primary{background:var(--indigo);color:#fff;padding:13px 26px}
 .btn-primary:hover{background:var(--indigo-light);transform:translateY(-1px);box-shadow:0 6px 20px rgba(79,70,229,.35)}
 .btn-secondary{background:var(--navy-light);color:var(--text);padding:11px 20px;border:1px solid rgba(255,255,255,.08)}
-.btn-secondary:hover{background:var(--navy-mid)}
 .btn-sm{padding:8px 16px;font-size:.85rem}
 .btn:disabled{opacity:.4;cursor:not-allowed;transform:none!important}
-input{font-family:'Inter',sans-serif;background:var(--navy-light);border:1px solid rgba(255,255,255,.1);border-radius:8px;color:var(--text);padding:11px 15px;font-size:1rem;width:100%;outline:none;transition:border .18s}
-input:focus{border-color:var(--indigo)}
+input[type=text],input[type=number]{font-family:'Inter',sans-serif;background:var(--navy-light);border:1px solid rgba(255,255,255,.1);border-radius:8px;color:var(--text);padding:11px 15px;font-size:1rem;width:100%;outline:none;transition:border .18s}
+input[type=text]:focus,input[type=number]:focus{border-color:var(--indigo)}
+input[type=range]{-webkit-appearance:none;appearance:none;height:6px;border-radius:3px;background:var(--navy-light);outline:none;width:100%}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--indigo);cursor:pointer;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.3)}
+input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:var(--indigo);cursor:pointer;border:2px solid #fff}
 label{font-family:'Space Grotesk',sans-serif;font-size:.82rem;color:var(--slate);margin-bottom:5px;display:block}
 .form-group{margin-bottom:15px}
 
@@ -43,83 +44,112 @@ label{font-family:'Space Grotesk',sans-serif;font-size:.82rem;color:var(--slate)
 .lang-toggle{display:flex;gap:8px;justify-content:center;margin-bottom:36px}
 .lang-btn{padding:7px 18px;border-radius:20px;border:2px solid rgba(255,255,255,.12);background:transparent;color:var(--slate);cursor:pointer;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:.85rem;transition:all .15s}
 .lang-btn.active{border-color:var(--indigo);color:var(--indigo-light);background:rgba(79,70,229,.1)}
-.start-btn-wrap{margin-bottom:20px}
 
 /* JOIN */
 #screen-join{align-items:center;justify-content:center;padding:40px 20px}
 .join-box{background:var(--navy-mid);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:36px;max-width:400px;width:100%}
-.join-box h2{font-size:1.5rem;margin-bottom:6px;text-align:center}
-.join-sub{color:var(--slate);text-align:center;margin-bottom:24px;font-size:.9rem}
 .join-error{color:var(--rose);font-size:.82rem;margin-top:10px}
 
 /* GAME */
 #screen-game{align-items:center;justify-content:center;padding:20px}
-.game-wrap{max-width:540px;width:100%}
-.game-topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px}
+.game-wrap{max-width:560px;width:100%}
+.game-topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
 .game-meta{font-size:.72rem;color:var(--indigo-light);font-family:'Space Grotesk',sans-serif;font-weight:600}
 .game-prog{font-size:.82rem;color:var(--slate);font-family:'Space Grotesk',sans-serif}
-.prog-dots{display:flex;gap:5px;margin:0 auto 28px;justify-content:center}
-.prog-dot{width:8px;height:8px;border-radius:50%;background:var(--navy-light);transition:all .25s}
+.prog-dots{display:flex;gap:4px;margin:0 auto 24px;justify-content:center;flex-wrap:wrap}
+.prog-dot{width:7px;height:7px;border-radius:50%;background:var(--navy-light);transition:all .25s;flex-shrink:0}
 .prog-dot.done{background:var(--indigo)}
 .prog-dot.current{background:var(--amber);transform:scale(1.3)}
-.q-card{background:var(--navy-mid);border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:28px;margin-bottom:18px}
-.q-card-num{font-size:.72rem;font-weight:600;color:var(--indigo-light);font-family:'Space Grotesk',sans-serif;margin-bottom:10px}
-.q-card-text{font-family:'Space Grotesk',sans-serif;font-size:1.2rem;font-weight:600;line-height:1.4;margin-bottom:22px}
-.choices{display:flex;flex-direction:column;gap:9px}
-.choice{background:var(--navy-light);border:2px solid rgba(255,255,255,.07);border-radius:11px;padding:13px 16px;cursor:pointer;font-size:.92rem;text-align:left;transition:all .15s;display:flex;align-items:center;gap:10px}
+.q-card{background:var(--navy-mid);border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:24px;margin-bottom:16px}
+.q-card-num{font-size:.72rem;font-weight:600;color:var(--indigo-light);font-family:'Space Grotesk',sans-serif;margin-bottom:8px}
+.q-card-text{font-family:'Space Grotesk',sans-serif;font-size:1.15rem;font-weight:600;line-height:1.4;margin-bottom:20px}
+.choices{display:flex;flex-direction:column;gap:8px}
+.choice{background:var(--navy-light);border:2px solid rgba(255,255,255,.07);border-radius:11px;padding:12px 15px;cursor:pointer;font-size:.9rem;text-align:left;transition:all .15s;display:flex;align-items:center;gap:10px;user-select:none}
 .choice:hover{border-color:var(--indigo);background:rgba(79,70,229,.08)}
 .choice.selected{border-color:var(--indigo);background:rgba(79,70,229,.14)}
-.choice-letter{font-family:'Space Grotesk',sans-serif;font-weight:700;color:var(--slate);min-width:20px;font-size:.82rem}
+.choice-letter{font-family:'Space Grotesk',sans-serif;font-weight:700;color:var(--slate);min-width:20px;font-size:.8rem}
 .choice.selected .choice-letter{color:var(--indigo-light)}
 .scale-wrap{margin-top:4px}
 .scale-labels{display:flex;justify-content:space-between;font-size:.74rem;color:var(--slate);margin-bottom:10px}
-.scale-options{display:flex;gap:7px}
-.scale-btn{flex:1;padding:13px 6px;background:var(--navy-light);border:2px solid rgba(255,255,255,.07);border-radius:9px;cursor:pointer;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1rem;text-align:center;transition:all .15s;color:var(--text)}
+.scale-options{display:flex;gap:6px}
+.scale-btn{flex:1;padding:12px 4px;background:var(--navy-light);border:2px solid rgba(255,255,255,.07);border-radius:9px;cursor:pointer;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1rem;text-align:center;transition:all .15s;color:var(--text)}
 .scale-btn:hover{border-color:var(--indigo)}
 .scale-btn.selected{border-color:var(--indigo);background:rgba(79,70,229,.18);color:var(--indigo-light)}
-.game-nav{display:flex;justify-content:flex-end}
+.game-nav{display:flex;justify-content:flex-end;margin-top:4px}
+
+/* RANK drag list */
+.rank-list{display:flex;flex-direction:column;gap:8px;margin-top:4px}
+.rank-item{background:var(--navy-light);border:2px solid rgba(255,255,255,.08);border-radius:11px;padding:12px 16px;display:flex;align-items:center;gap:12px;cursor:grab;user-select:none;transition:border-color .15s,box-shadow .15s;touch-action:none}
+.rank-item.dragging{opacity:.5;border-color:var(--indigo);box-shadow:0 8px 24px rgba(0,0,0,.4);cursor:grabbing}
+.rank-item.drag-over{border-color:var(--amber);background:rgba(245,158,11,.08)}
+.rank-handle{color:var(--slate);font-size:1.1rem;flex-shrink:0}
+.rank-num{font-family:'Space Grotesk',sans-serif;font-weight:700;color:var(--indigo-light);min-width:22px;font-size:.85rem}
+.rank-label{font-size:.92rem;flex:1}
+.rank-emoji{font-size:1.2rem;flex-shrink:0}
+
+/* FACTION cards */
+.faction-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px}
+.faction-card{background:var(--navy-light);border:2px solid rgba(255,255,255,.08);border-radius:12px;padding:14px 12px;cursor:pointer;transition:all .15s;text-align:center;user-select:none}
+.faction-card:hover{border-color:var(--indigo);background:rgba(79,70,229,.08)}
+.faction-card.selected{border-color:var(--indigo);background:rgba(79,70,229,.14)}
+.faction-icon{font-size:1.6rem;margin-bottom:6px}
+.faction-name{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:.88rem;margin-bottom:3px}
+.faction-desc{font-size:.74rem;color:var(--slate);line-height:1.3}
+.confidence-wrap{margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,.07)}
+.confidence-val{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.4rem;color:var(--amber);text-align:center;margin-top:8px}
+
+/* EMOJI picker */
+.emoji-grid{display:grid;grid-template-columns:repeat(10,1fr);gap:5px;margin-top:8px}
+.emoji-btn{font-size:1.4rem;padding:6px;border:2px solid transparent;border-radius:8px;cursor:pointer;background:var(--navy-light);transition:all .12s;text-align:center;line-height:1}
+.emoji-btn:hover{border-color:var(--indigo);background:rgba(79,70,229,.1);transform:scale(1.15)}
+.emoji-btn.selected{border-color:var(--amber);background:rgba(245,158,11,.12);transform:scale(1.1)}
+.emoji-selected-row{display:flex;gap:12px;justify-content:center;margin-top:12px;min-height:44px;background:var(--navy-light);border-radius:10px;padding:8px;align-items:center}
+.emoji-slot{font-size:1.8rem;opacity:.3;transition:all .2s}
+.emoji-slot.filled{opacity:1}
+.emoji-hint{font-size:.8rem;color:var(--slate);text-align:center;margin-top:6px}
+
+/* FERMI */
+.fermi-input-wrap{display:flex;align-items:center;gap:10px;margin-top:8px}
+.fermi-input-wrap input{font-size:1.3rem;text-align:center;font-family:'Space Grotesk',sans-serif;font-weight:700}
+.fermi-unit{font-size:1rem;color:var(--slate);white-space:nowrap}
+.fermi-log-wrap{margin-top:16px}
+.fermi-log-labels{display:flex;justify-content:space-between;font-size:.72rem;color:var(--slate);margin-bottom:8px}
+.fermi-fun{margin-top:12px;font-size:.82rem;color:var(--slate);font-style:italic;text-align:center;min-height:20px}
 
 /* DONE */
 #screen-done{align-items:center;justify-content:center;padding:30px 20px}
-.done-box{background:var(--navy-mid);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:36px;max-width:480px;width:100%;text-align:center}
-.done-box h2{font-size:1.5rem;margin-bottom:8px}
-.done-sub{color:var(--slate);margin-bottom:24px;font-size:.9rem;line-height:1.5}
-.answer-code{font-family:'Space Grotesk',sans-serif;font-size:1rem;font-weight:700;letter-spacing:.04em;background:var(--navy-light);border-radius:12px;padding:18px 20px;margin:16px 0;word-break:break-all;color:var(--amber);cursor:pointer;border:2px solid rgba(245,158,11,.25);transition:border .2s;line-height:1.6}
+.done-box{background:var(--navy-mid);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:36px;max-width:500px;width:100%;text-align:center}
+.answer-code{font-family:'Space Grotesk',sans-serif;font-size:.82rem;font-weight:600;letter-spacing:.03em;background:var(--navy-light);border-radius:12px;padding:16px 18px;margin:16px 0;word-break:break-all;color:var(--amber);cursor:pointer;border:2px solid rgba(245,158,11,.2);line-height:1.7}
 .answer-code:hover{border-color:var(--amber)}
-.copy-hint{font-size:.78rem;color:var(--slate);margin-bottom:16px}
 </style>
 </head>
 <body>
 
-<!-- LANDING -->
 <div id="screen-landing" class="screen active">
   <div style="max-width:520px;margin:0 auto;padding:60px 20px;display:flex;flex-direction:column;align-items:center">
     <div class="eyebrow">SCICOMM LAB · ULB</div>
     <h1 class="landing-title">Find your<br><span id="t-tribe">scientific tribe.</span></h1>
-    <p class="landing-sub" id="t-sub">Answer 10 quick questions about how you think and work. Takes about 3 minutes.</p>
+    <p class="landing-sub" id="t-sub">14 quick questions about how you think and work. Takes about 7 minutes.</p>
     <div class="lang-toggle">
       <button class="lang-btn active" onclick="setLang('en')">🇬🇧 English</button>
       <button class="lang-btn" onclick="setLang('fr')">🇫🇷 Français</button>
     </div>
-    <div class="start-btn-wrap">
-      <button class="btn btn-primary" style="font-size:1.1rem;padding:16px 40px" onclick="show('screen-join')" id="t-start-btn">Let's go →</button>
-    </div>
+    <button class="btn btn-primary" style="font-size:1.1rem;padding:16px 40px;margin-bottom:16px" onclick="show('screen-join')" id="t-start-btn">Let's go →</button>
     <p style="font-size:.78rem;color:var(--slate)" id="t-no-account">No account needed. Your answers stay on your device.</p>
   </div>
 </div>
 
-<!-- JOIN -->
 <div id="screen-join" class="screen">
   <div style="display:flex;align-items:center;justify-content:center;min-height:100vh;padding:40px 20px">
     <div class="join-box">
       <div style="font-size:2rem;text-align:center;margin-bottom:14px">🧪</div>
-      <h2 id="t-join-title">Ready to start?</h2>
-      <p class="join-sub" id="t-join-sub">Just your name — that's all we need.</p>
+      <h2 style="font-size:1.5rem;margin-bottom:6px;text-align:center" id="t-join-title">Ready to start?</h2>
+      <p style="color:var(--slate);text-align:center;margin-bottom:24px;font-size:.9rem" id="t-join-sub">Just your name — that's all we need.</p>
       <div class="form-group">
         <label id="t-name-label">Your name</label>
         <input type="text" id="join-name" placeholder="e.g. Marie C." autocomplete="off">
       </div>
-      <div style="display:flex;gap:10px;margin-top:6px">
+      <div style="display:flex;gap:10px;margin-top:8px">
         <button class="btn btn-primary" style="flex:1" onclick="startGame()" id="t-join-btn">Start →</button>
         <button class="btn btn-secondary" onclick="show('screen-landing')" id="t-back-btn">Back</button>
       </div>
@@ -128,7 +158,6 @@ label{font-family:'Space Grotesk',sans-serif;font-size:.82rem;color:var(--slate)
   </div>
 </div>
 
-<!-- GAME -->
 <div id="screen-game" class="screen">
   <div style="display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px">
     <div class="game-wrap">
@@ -145,47 +174,82 @@ label{font-family:'Space Grotesk',sans-serif;font-size:.82rem;color:var(--slate)
   </div>
 </div>
 
-<!-- DONE -->
 <div id="screen-done" class="screen">
   <div style="display:flex;align-items:center;justify-content:center;min-height:100vh;padding:30px 20px">
     <div class="done-box">
       <div style="font-size:2.5rem;margin-bottom:14px">✅</div>
-      <h2 id="t-done-title">All done!</h2>
-      <p class="done-sub" id="t-done-sub">Copy your code below and send it to your instructor as they asked (chat, email, form…).</p>
+      <h2 style="font-size:1.5rem;margin-bottom:8px" id="t-done-title">All done!</h2>
+      <p style="color:var(--slate);margin-bottom:20px;font-size:.9rem;line-height:1.5" id="t-done-sub">Copy your code below and send it to your instructor.</p>
       <div class="answer-code" id="code-display" onclick="copyCode()"></div>
-      <p class="copy-hint" id="t-copy-hint">👆 Tap to copy</p>
+      <p style="font-size:.78rem;color:var(--slate);margin-bottom:14px" id="t-copy-hint">👆 Tap to copy</p>
       <button class="btn btn-secondary btn-sm" onclick="copyCode()" id="t-copy-btn">Copy code</button>
     </div>
   </div>
 </div>
 
 <script>
-const T = {
-  en: {
-    tribe:"scientific tribe.", sub:"Answer 10 quick questions about how you think and work. Takes about 3 minutes.",
-    startBtn:"Let's go →", noAccount:"No account needed. Your answers stay on your device.",
-    joinTitle:"Ready to start?", joinSub:"Just your name — that's all we need.",
-    nameLabel:"Your name", joinBtn:"Start →", backBtn:"Back",
-    doneTitle:"All done!",
-    doneSub:"Copy your code below and send it to your instructor as they asked (chat, email, form…).",
-    copyHint:"👆 Tap to copy", copyBtn:"Copy code",
-    qOf:(a,b)=>`Question ${a} of ${b}`, next:"Next →",
-    nameErr:"Please enter your name.",
+// ── TRANSLATIONS ──────────────────────────────────────────────────────────────
+const T={
+  en:{
+    tribe:"scientific tribe.",sub:"14 quick questions about how you think and work. Takes about 7 minutes.",
+    startBtn:"Let's go →",noAccount:"No account needed. Your answers stay on your device.",
+    joinTitle:"Ready to start?",joinSub:"Just your name — that's all we need.",
+    nameLabel:"Your name",joinBtn:"Start →",backBtn:"Back",
+    doneTitle:"All done!",doneSub:"Copy your code below and send it to your instructor.",
+    copyHint:"👆 Tap to copy",copyBtn:"Copy code",
+    qOf:(a,b)=>`Question ${a} of ${b}`,next:"Next →",nameErr:"Please enter your name.",
+    dragHint:"Drag to reorder — top = most important",
+    confidenceLabel:"How sure are you of your choice?",
+    emojiHint:"Pick exactly 3 emojis that describe you",
+    fermiQ:"How many tennis balls fit in a standard city bus?",
+    fermiHint:"Don't Google it — your gut feeling is what we want!",
+    fermiRef:(v)=>fermiComment(v,'en'),
+    rankItems:["Speed","Quality","Creativity","Fairness","Learning"],
+    rankEmoji:["⚡","🎯","✨","⚖️","📚"],
+    rankQ:"Rank these work values from most to least important to you in a group project:",
+    factionQ:"Which faction do you belong to?",
+    emojiQ:"Describe yourself in 3 emojis:",
+    factions:[
+      {icon:"🧭",name:"Explorers",desc:"Push into unknown territory"},
+      {icon:"🏛️",name:"Architects",desc:"Design solid structures"},
+      {icon:"⚙️",name:"Inventors",desc:"Build new things"},
+      {icon:"♟️",name:"Strategists",desc:"Think many steps ahead"},
+      {icon:"🕊️",name:"Diplomats",desc:"Bring people together"},
+      {icon:"🛡️",name:"Guardians",desc:"Protect what matters"}
+    ],
   },
-  fr: {
-    tribe:"votre tribu scientifique.", sub:"Répondez à 10 questions rapides sur votre façon de penser et de travailler. Environ 3 minutes.",
-    startBtn:"C'est parti →", noAccount:"Aucun compte requis. Vos réponses restent sur votre appareil.",
-    joinTitle:"Prêt·e à commencer ?", joinSub:"Juste votre nom — c'est tout.",
-    nameLabel:"Votre nom", joinBtn:"Commencer →", backBtn:"Retour",
-    doneTitle:"C'est fait !",
-    doneSub:"Copiez votre code ci-dessous et envoyez-le à votre enseignant·e (chat, email, formulaire…).",
-    copyHint:"👆 Appuyez pour copier", copyBtn:"Copier le code",
-    qOf:(a,b)=>`Question ${a} sur ${b}`, next:"Suivant →",
-    nameErr:"Veuillez entrer votre nom.",
+  fr:{
+    tribe:"votre tribu scientifique.",sub:"14 questions rapides sur votre façon de penser et travailler. Environ 7 minutes.",
+    startBtn:"C'est parti →",noAccount:"Aucun compte requis. Vos réponses restent sur votre appareil.",
+    joinTitle:"Prêt·e à commencer ?",joinSub:"Juste votre nom — c'est tout.",
+    nameLabel:"Votre nom",joinBtn:"Commencer →",backBtn:"Retour",
+    doneTitle:"C'est fait !",doneSub:"Copiez votre code ci-dessous et envoyez-le à votre enseignant·e.",
+    copyHint:"👆 Appuyez pour copier",copyBtn:"Copier le code",
+    qOf:(a,b)=>`Question ${a} sur ${b}`,next:"Suivant →",nameErr:"Veuillez entrer votre nom.",
+    dragHint:"Glissez pour réordonner — haut = plus important",
+    confidenceLabel:"À quel point êtes-vous sûr·e de votre choix ?",
+    emojiHint:"Choisissez exactement 3 emojis qui vous décrivent",
+    fermiQ:"Combien de balles de tennis rentrent dans un bus de ville standard ?",
+    fermiHint:"Ne cherchez pas sur Google — votre intuition, c'est ce qu'on veut !",
+    fermiRef:(v)=>fermiComment(v,'fr'),
+    rankItems:["Rapidité","Qualité","Créativité","Équité","Apprentissage"],
+    rankEmoji:["⚡","🎯","✨","⚖️","📚"],
+    rankQ:"Classez ces valeurs de travail de la plus à la moins importante pour vous dans un projet de groupe :",
+    factionQ:"À quelle faction appartenez-vous ?",
+    emojiQ:"Décrivez-vous en 3 emojis :",
+    factions:[
+      {icon:"🧭",name:"Explorateurs",desc:"Partent en territoire inconnu"},
+      {icon:"🏛️",name:"Architectes",desc:"Conçoivent des structures solides"},
+      {icon:"⚙️",name:"Inventeurs",desc:"Construisent de nouvelles choses"},
+      {icon:"♟️",name:"Stratèges",desc:"Pensent plusieurs coups à l'avance"},
+      {icon:"🕊️",name:"Diplomates",desc:"Fédèrent les gens"},
+      {icon:"🛡️",name:"Gardiens",desc:"Protègent ce qui compte"}
+    ],
   }
 };
 
-const QUESTIONS = {
+// ── QUESTIONS ─────────────────────────────────────────────────────────────────
+const QS={
   en:[
     {id:"q1",type:"choice",text:"When you encounter a complex topic, your first instinct is to…",options:["Dive in and figure it out as you go","Map out the big picture before touching details","Find someone who already knows and ask them","Look for an analogy to something familiar"]},
     {id:"q2",type:"scale",text:"How comfortable are you speaking in front of a group?",low:"I'd rather not",high:"Totally at ease"},
@@ -197,6 +261,10 @@ const QUESTIONS = {
     {id:"q8",type:"scale",text:"How motivated are you by feedback and critique from others?",low:"I prefer to self-assess",high:"Critique is how I grow"},
     {id:"q9",type:"choice",text:"What worries you most about this course?",options:["Not having enough scientific depth","Being judged on my communication style","Group dynamics and unfair workload splits","Running out of time to do things properly"]},
     {id:"q10",type:"choice",text:"Pick a scientist you'd most want to grab a coffee with:",options:["Carl Sagan — the cosmic storyteller","Marie Curie — the relentless experimenter","Richard Feynman — the mischievous explainer","Rachel Carson — the advocate and writer"]},
+    {id:"q11",type:"rank",text:""},
+    {id:"q12",type:"faction",text:""},
+    {id:"q13",type:"emoji",text:""},
+    {id:"q14",type:"fermi",text:""},
   ],
   fr:[
     {id:"q1",type:"choice",text:"Face à un sujet complexe, votre premier réflexe est de…",options:["Plonger dedans et comprendre au fur et à mesure","Cartographier la vue d'ensemble avant tout","Trouver quelqu'un qui s'y connaît et lui demander","Chercher une analogie avec quelque chose de familier"]},
@@ -209,72 +277,251 @@ const QUESTIONS = {
     {id:"q8",type:"scale",text:"Dans quelle mesure les retours et critiques des autres vous motivent-ils ?",low:"Je préfère m'auto-évaluer",high:"La critique est ma façon de progresser"},
     {id:"q9",type:"choice",text:"Qu'est-ce qui vous inquiète le plus dans ce cours ?",options:["Manquer de profondeur scientifique","Être jugé·e sur mon style de communication","La dynamique de groupe et les répartitions inégales","Manquer de temps pour bien faire les choses"]},
     {id:"q10",type:"choice",text:"Choisissez un·e scientifique avec qui vous aimeriez prendre un café :",options:["Carl Sagan — le conteur cosmique","Marie Curie — l'expérimentatrice acharnée","Richard Feynman — l'explicateur malicieux","Rachel Carson — l'autrice engagée"]},
+    {id:"q11",type:"rank",text:""},
+    {id:"q12",type:"faction",text:""},
+    {id:"q13",type:"emoji",text:""},
+    {id:"q14",type:"fermi",text:""},
   ]
 };
 
-let lang="en", studentName="", currentQ=0, answers={};
+const EMOJI_SET=["🔬","🚀","🎨","📊","💡","🌍","🎭","🔧","📖","🎵","⚡","🌊","🧩","🎯","🏗️","🌱","🔭","🎬","🧪","💻","🤝","🎲","🌟","🏔️","🎸","🧠","📐","🌈","🔑","🎤","🦊","🐉","🌙","☕","🎠","🧲","📡","🌀","🎪","🗺️","🦋","🔮","🎩","🌺","⚙️","🏹","🎻","🦁","🌊","💎","🐧","🎋","🗿","🧭","🌋","🎆","🦅","🐙","🎯","🌠"];
 
+// ── STATE ─────────────────────────────────────────────────────────────────────
+let lang="en",studentName="",currentQ=0,answers={};
+let rankOrder=[0,1,2,3,4];
+let factionChoice=-1,factionConf=50;
+let emojiPicks=[];
+let fermiVal=null;
+// drag state
+let dragSrc=null,dragIdx=null;
+
+// ── LANG ──────────────────────────────────────────────────────────────────────
 function setLang(l){
   lang=l;
   document.querySelectorAll(".lang-btn").forEach((b,i)=>b.classList.toggle("active",(i===0&&l==="en")||(i===1&&l==="fr")));
   const t=T[l];
-  setText("t-tribe",t.tribe); setText("t-sub",t.sub); setText("t-start-btn",t.startBtn);
-  setText("t-no-account",t.noAccount); setText("t-join-title",t.joinTitle); setText("t-join-sub",t.joinSub);
-  setText("t-name-label",t.nameLabel); setText("t-join-btn",t.joinBtn); setText("t-back-btn",t.backBtn);
-  setText("t-done-title",t.doneTitle); setText("t-done-sub",t.doneSub);
-  setText("t-copy-hint",t.copyHint); setText("t-copy-btn",t.copyBtn);
+  setText("t-tribe",t.tribe);setText("t-sub",t.sub);setText("t-start-btn",t.startBtn);
+  setText("t-no-account",t.noAccount);setText("t-join-title",t.joinTitle);setText("t-join-sub",t.joinSub);
+  setText("t-name-label",t.nameLabel);setText("t-join-btn",t.joinBtn);setText("t-back-btn",t.backBtn);
+  setText("t-done-title",t.doneTitle);setText("t-done-sub",t.doneSub);
+  setText("t-copy-hint",t.copyHint);setText("t-copy-btn",t.copyBtn);
 }
 function setText(id,v){const e=document.getElementById(id);if(e)e.textContent=v;}
 function show(id){document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));document.getElementById(id).classList.add("active");}
 
+// ── GAME ──────────────────────────────────────────────────────────────────────
 function startGame(){
   const name=document.getElementById("join-name").value.trim();
   if(!name){document.getElementById("join-error").textContent=T[lang].nameErr;return;}
-  studentName=name; currentQ=0; answers={};
+  studentName=name;currentQ=0;answers={};rankOrder=[0,1,2,3,4];factionChoice=-1;factionConf=50;emojiPicks=[];fermiVal=null;
   document.getElementById("game-name").textContent=name;
-  renderDots(); show("screen-game"); renderQ();
+  renderDots();show("screen-game");renderQ();
 }
 
 function renderDots(){
-  document.getElementById("prog-dots").innerHTML=QUESTIONS.en.map((_,i)=>`<div class="prog-dot" id="pd-${i}"></div>`).join("");
+  const total=QS.en.length;
+  document.getElementById("prog-dots").innerHTML=Array.from({length:total},(_,i)=>`<div class="prog-dot" id="pd-${i}"></div>`).join("");
   updateDots();
 }
 function updateDots(){
-  QUESTIONS.en.forEach((_,i)=>{
+  QS.en.forEach((_,i)=>{
     const d=document.getElementById(`pd-${i}`);if(!d)return;
     d.className="prog-dot"+(i<currentQ?" done":i===currentQ?" current":"");
   });
 }
 
 function renderQ(){
-  if(currentQ>=QUESTIONS.en.length){finish();return;}
-  const t=T[lang], q=QUESTIONS[lang][currentQ];
-  document.getElementById("game-prog").textContent=t.qOf(currentQ+1,QUESTIONS.en.length);
+  if(currentQ>=QS.en.length){finish();return;}
+  const t=T[lang],q=QS[lang][currentQ];
+  document.getElementById("game-prog").textContent=t.qOf(currentQ+1,QS.en.length);
   updateDots();
   const area=document.getElementById("game-area");
-  if(q.type==="choice"){
-    area.innerHTML=`<div class="q-card"><div class="q-card-num">${t.qOf(currentQ+1,QUESTIONS.en.length)}</div><div class="q-card-text">${q.text}</div><div class="choices">${q.options.map((o,i)=>`<div class="choice" onclick="pick(${i})" id="ch-${i}"><span class="choice-letter">${String.fromCharCode(65+i)}</span><span>${o}</span></div>`).join("")}</div></div><div class="game-nav"><button class="btn btn-primary" id="btn-next" onclick="nextQ()" disabled>${t.next}</button></div>`;
-  } else {
-    area.innerHTML=`<div class="q-card"><div class="q-card-num">${t.qOf(currentQ+1,QUESTIONS.en.length)}</div><div class="q-card-text">${q.text}</div><div class="scale-wrap"><div class="scale-labels"><span>${q.low}</span><span>${q.high}</span></div><div class="scale-options">${[1,2,3,4,5].map(v=>`<button class="scale-btn" onclick="pickScale(${v-1})" id="sc-${v}">${v}</button>`).join("")}</div></div></div><div class="game-nav"><button class="btn btn-primary" id="btn-next" onclick="nextQ()" disabled>${t.next}</button></div>`;
-  }
-  const prev=answers[QUESTIONS.en[currentQ].id];
-  if(prev!==undefined){
-    if(q.type==="choice"){document.getElementById(`ch-${prev}`)?.classList.add("selected");}
-    else{document.getElementById(`sc-${prev+1}`)?.classList.add("selected");}
-    document.getElementById("btn-next").disabled=false;
-  }
-}
-function pick(i){document.querySelectorAll(".choice").forEach(c=>c.classList.remove("selected"));document.getElementById(`ch-${i}`)?.classList.add("selected");answers[QUESTIONS.en[currentQ].id]=i;document.getElementById("btn-next").disabled=false;}
-function pickScale(v){document.querySelectorAll(".scale-btn").forEach(b=>b.classList.remove("selected"));document.getElementById(`sc-${v+1}`)?.classList.add("selected");answers[QUESTIONS.en[currentQ].id]=v;document.getElementById("btn-next").disabled=false;}
-function nextQ(){if(answers[QUESTIONS.en[currentQ].id]===undefined)return;currentQ++;renderQ();}
 
+  if(q.type==="choice") renderChoice(area,q,t);
+  else if(q.type==="scale") renderScale(area,q,t);
+  else if(q.type==="rank") renderRank(area,t);
+  else if(q.type==="faction") renderFaction(area,t);
+  else if(q.type==="emoji") renderEmoji(area,t);
+  else if(q.type==="fermi") renderFermi(area,t);
+}
+
+function nextBtn(disabled=true){
+  return `<div class="game-nav"><button class="btn btn-primary" id="btn-next" onclick="nextQ()" ${disabled?"disabled":""}>${T[lang].next}</button></div>`;
+}
+function tryEnableNext(){const b=document.getElementById("btn-next");if(b)b.disabled=false;}
+
+// CHOICE
+function renderChoice(area,q,t){
+  area.innerHTML=`<div class="q-card"><div class="q-card-num">${t.qOf(currentQ+1,QS.en.length)}</div><div class="q-card-text">${q.text}</div><div class="choices">${q.options.map((o,i)=>`<div class="choice" onclick="pick(${i})" id="ch-${i}"><span class="choice-letter">${String.fromCharCode(65+i)}</span><span>${o}</span></div>`).join("")}</div></div>${nextBtn()}`;
+  const prev=answers[QS.en[currentQ].id];
+  if(prev!==undefined){document.getElementById(`ch-${prev}`)?.classList.add("selected");tryEnableNext();}
+}
+function pick(i){document.querySelectorAll(".choice").forEach(c=>c.classList.remove("selected"));document.getElementById(`ch-${i}`)?.classList.add("selected");answers[QS.en[currentQ].id]=i;tryEnableNext();}
+
+// SCALE
+function renderScale(area,q,t){
+  area.innerHTML=`<div class="q-card"><div class="q-card-num">${t.qOf(currentQ+1,QS.en.length)}</div><div class="q-card-text">${q.text}</div><div class="scale-wrap"><div class="scale-labels"><span>${q.low}</span><span>${q.high}</span></div><div class="scale-options">${[1,2,3,4,5].map(v=>`<button class="scale-btn" onclick="pickScale(${v-1})" id="sc-${v}">${v}</button>`).join("")}</div></div></div>${nextBtn()}`;
+  const prev=answers[QS.en[currentQ].id];
+  if(prev!==undefined){document.getElementById(`sc-${prev+1}`)?.classList.add("selected");tryEnableNext();}
+}
+function pickScale(v){document.querySelectorAll(".scale-btn").forEach(b=>b.classList.remove("selected"));document.getElementById(`sc-${v+1}`)?.classList.add("selected");answers[QS.en[currentQ].id]=v;tryEnableNext();}
+
+// RANK — drag-and-drop
+function renderRank(area,t){
+  area.innerHTML=`<div class="q-card"><div class="q-card-num">${t.qOf(currentQ+1,QS.en.length)}</div><div class="q-card-text">${t.rankQ}</div><p style="font-size:.78rem;color:var(--slate);margin-bottom:10px">${t.dragHint}</p><div class="rank-list" id="rank-list">${buildRankItems(t)}</div></div>${nextBtn(false)}`;
+  attachRankDrag();
+}
+function buildRankItems(t){
+  return rankOrder.map((idx,pos)=>`<div class="rank-item" data-idx="${idx}" draggable="true"><span class="rank-handle">⠿</span><span class="rank-num">${pos+1}</span><span class="rank-emoji">${t.rankEmoji[idx]}</span><span class="rank-label">${t.rankItems[idx]}</span></div>`).join("");
+}
+function refreshRankList(){
+  const t=T[lang],list=document.getElementById("rank-list");if(!list)return;
+  list.innerHTML=buildRankItems(t);attachRankDrag();
+}
+function attachRankDrag(){
+  const items=document.querySelectorAll(".rank-item");
+  items.forEach((el,i)=>{
+    // Desktop drag
+    el.addEventListener("dragstart",e=>{dragSrc=el;dragIdx=i;setTimeout(()=>el.classList.add("dragging"),0);});
+    el.addEventListener("dragend",()=>{el.classList.remove("dragging");document.querySelectorAll(".rank-item").forEach(x=>x.classList.remove("drag-over"));});
+    el.addEventListener("dragover",e=>{e.preventDefault();if(el!==dragSrc){document.querySelectorAll(".rank-item").forEach(x=>x.classList.remove("drag-over"));el.classList.add("drag-over");}});
+    el.addEventListener("drop",e=>{e.preventDefault();const j=Array.from(document.querySelectorAll(".rank-item")).indexOf(el);if(dragIdx!==j){const tmp=rankOrder[dragIdx];rankOrder[dragIdx]=rankOrder[j];rankOrder[j]=tmp;refreshRankList();}});
+    // Touch drag
+    let startY=0,startI=0;
+    el.addEventListener("touchstart",e=>{startY=e.touches[0].clientY;startI=i;el.classList.add("dragging");},{passive:true});
+    el.addEventListener("touchmove",e=>{
+      e.preventDefault();
+      const y=e.touches[0].clientY,all=Array.from(document.querySelectorAll(".rank-item"));
+      all.forEach(x=>x.classList.remove("drag-over"));
+      let target=null,minD=Infinity;
+      all.forEach((x,j)=>{if(j===startI)return;const r=x.getBoundingClientRect(),mid=r.top+r.height/2,d=Math.abs(y-mid);if(d<minD){minD=d;target=j;}});
+      if(target!==null)all[target].classList.add("drag-over");
+    },{passive:false});
+    el.addEventListener("touchend",e=>{
+      el.classList.remove("dragging");
+      const y=e.changedTouches[0].clientY,all=Array.from(document.querySelectorAll(".rank-item"));
+      let target=null,minD=Infinity;
+      all.forEach((x,j)=>{if(j===startI)return;const r=x.getBoundingClientRect(),mid=r.top+r.height/2,d=Math.abs(y-mid);if(d<minD){minD=d;target=j;}});
+      all.forEach(x=>x.classList.remove("drag-over"));
+      if(target!==null&&target!==startI){const tmp=rankOrder[startI];rankOrder[startI]=rankOrder[target];rankOrder[target]=tmp;refreshRankList();}
+    });
+  });
+}
+
+// FACTION + confidence
+function renderFaction(area,t){
+  const saved=answers["q12"];
+  if(saved!==undefined){const parts=saved.split(":");factionChoice=parseInt(parts[0]);factionConf=parseInt(parts[1])||50;}
+  area.innerHTML=`<div class="q-card"><div class="q-card-num">${t.qOf(currentQ+1,QS.en.length)}</div><div class="q-card-text">${t.factionQ}</div><div class="faction-grid">${t.factions.map((f,i)=>`<div class="faction-card${factionChoice===i?" selected":""}" onclick="pickFaction(${i})" id="fc-${i}"><div class="faction-icon">${f.icon}</div><div class="faction-name">${f.name}</div><div class="faction-desc">${f.desc}</div></div>`).join("")}</div><div class="confidence-wrap"><label>${t.confidenceLabel}</label><input type="range" id="conf-slider" min="0" max="100" value="${factionConf}" oninput="setConf(this.value)"><div class="confidence-val" id="conf-val">${factionConf}%</div></div></div>${nextBtn(factionChoice<0)}`;
+}
+function pickFaction(i){document.querySelectorAll(".faction-card").forEach(c=>c.classList.remove("selected"));document.getElementById(`fc-${i}`)?.classList.add("selected");factionChoice=i;saveFactConf();tryEnableNext();}
+function setConf(v){factionConf=parseInt(v);document.getElementById("conf-val").textContent=v+"%";saveFactConf();}
+function saveFactConf(){if(factionChoice>=0)answers["q12"]=factionChoice+":"+factionConf;}
+
+// EMOJI picker
+function renderEmoji(area,t){
+  const saved=answers["q13"];if(saved)emojiPicks=saved.split("-").map(Number).filter(n=>!isNaN(n));
+  area.innerHTML=`<div class="q-card"><div class="q-card-num">${t.qOf(currentQ+1,QS.en.length)}</div><div class="q-card-text">${t.emojiQ}</div><p style="font-size:.78rem;color:var(--slate);margin-bottom:8px">${t.emojiHint}</p><div class="emoji-selected-row" id="emoji-selected">${renderEmojiSlots()}</div><p class="emoji-hint" id="emoji-hint">${emojiPicks.length}/3 selected</p><div class="emoji-grid">${EMOJI_SET.map((e,i)=>`<div class="emoji-btn${emojiPicks.includes(i)?" selected":""}" onclick="toggleEmoji(${i})" id="eb-${i}">${e}</div>`).join("")}</div></div>${nextBtn(emojiPicks.length!==3)}`;
+}
+function renderEmojiSlots(){
+  return[0,1,2].map(i=>`<span class="emoji-slot${emojiPicks[i]!==undefined?" filled":""}">${emojiPicks[i]!==undefined?EMOJI_SET[emojiPicks[i]]:"·"}</span>`).join("");
+}
+function toggleEmoji(i){
+  if(emojiPicks.includes(i)){emojiPicks=emojiPicks.filter(x=>x!==i);}
+  else if(emojiPicks.length<3){emojiPicks.push(i);}
+  else{emojiPicks.shift();emojiPicks.push(i);}
+  document.querySelectorAll(".emoji-btn").forEach((el,j)=>el.classList.toggle("selected",emojiPicks.includes(j)));
+  document.getElementById("emoji-selected").innerHTML=renderEmojiSlots();
+  document.getElementById("emoji-hint").textContent=emojiPicks.length+"/3 selected";
+  if(emojiPicks.length===3){answers["q13"]=emojiPicks.join("-");tryEnableNext();}
+  else{const b=document.getElementById("btn-next");if(b)b.disabled=true;}
+}
+
+// FERMI
+const FERMI_COMMENTS_EN=["That's... optimistic. Very optimistic.","You think buses are small, huh?","A reasonable start!","Getting warmer — you have a feel for volume.","Solid Fermi instinct!","You've clearly thought about this before.","Are you secretly a bus driver?","That's... a lot of tennis balls.","The bus would collapse, but respect the ambition."];
+const FERMI_COMMENTS_FR=["C'est... optimiste. Très optimiste.","Vous pensez que les bus sont petits, hein ?","Un début raisonnable !","Pas mal — vous avez le sens du volume.","Bon instinct de Fermi !","Vous avez clairement déjà réfléchi à ça.","Êtes-vous secrètement chauffeur de bus ?","C'est... beaucoup de balles de tennis.","Le bus s'effondrerait, mais respect pour l'ambition."];
+function fermiComment(v,l){
+  if(!v||v<=0)return"";
+  const log=Math.log10(v);
+  const idx=Math.min(Math.floor(Math.max(0,log-1)),l==="fr"?FERMI_COMMENTS_FR.length-1:FERMI_COMMENTS_EN.length-1);
+  return l==="fr"?FERMI_COMMENTS_FR[idx]:FERMI_COMMENTS_EN[idx];
+}
+function renderFermi(area,t){
+  const saved=answers["q14"];if(saved)fermiVal=saved;
+  area.innerHTML=`<div class="q-card"><div class="q-card-num">${t.qOf(currentQ+1,QS.en.length)}</div><div class="q-card-text">${t.fermiQ}</div><p style="font-size:.78rem;color:var(--slate);margin-bottom:14px;font-style:italic">${t.fermiHint}</p><div class="fermi-input-wrap"><input type="number" id="fermi-input" min="1" placeholder="?" value="${fermiVal||""}" oninput="updateFermi(this.value)" style="font-size:1.3rem;font-family:'Space Grotesk',sans-serif;font-weight:700;text-align:center"><span class="fermi-unit">tennis balls</span></div><div class="fermi-log-wrap"><div class="fermi-log-labels"><span>1</span><span>100</span><span>10k</span><span>1M</span><span>100M</span></div><input type="range" id="fermi-log" min="0" max="8" step="0.01" value="${fermiVal?Math.log10(fermiVal):2}" oninput="updateFermiLog(this.value)"></div><div class="fermi-fun" id="fermi-fun">${fermiVal?t.fermiRef(fermiVal):""}</div></div>${nextBtn(!fermiVal)}`;
+}
+function updateFermi(v){
+  const n=parseInt(v);if(!n||n<=0)return;
+  fermiVal=n;answers["q14"]=n;
+  const logV=Math.log10(n);
+  document.getElementById("fermi-log").value=Math.min(8,Math.max(0,logV));
+  document.getElementById("fermi-fun").textContent=T[lang].fermiRef(n);
+  tryEnableNext();
+}
+function updateFermiLog(v){
+  const n=Math.round(Math.pow(10,parseFloat(v)));
+  fermiVal=n;answers["q14"]=n;
+  document.getElementById("fermi-input").value=n;
+  document.getElementById("fermi-fun").textContent=T[lang].fermiRef(n);
+  tryEnableNext();
+}
+
+// ── NAVIGATION ────────────────────────────────────────────────────────────────
+function nextQ(){
+  const qid=QS.en[currentQ].id;
+  if(QS.en[currentQ].type==="rank"){answers["q11"]=rankOrder.join("");}
+  if(answers[qid]===undefined&&QS.en[currentQ].type!=="rank"){return;}
+  currentQ++;renderQ();
+}
+
+// ── BROWSER SIGNALS ───────────────────────────────────────────────────────────
+function collectBrowser(){
+  const ua=navigator.userAgent;
+  let os="unknown";
+  if(/android/i.test(ua))os="android";
+  else if(/iphone|ipad|ipod/i.test(ua))os="ios";
+  else if(/windows/i.test(ua))os="windows";
+  else if(/mac/i.test(ua))os="macos";
+  else if(/linux/i.test(ua))os="linux";
+  let browser="unknown";
+  if(/edg\//i.test(ua))browser="edge";
+  else if(/chrome/i.test(ua))browser="chrome";
+  else if(/firefox/i.test(ua))browser="firefox";
+  else if(/safari/i.test(ua))browser="safari";
+  return{
+    os,browser,
+    mobile:/mobi|android|iphone|ipad/i.test(ua)?1:0,
+    dark:window.matchMedia("(prefers-color-scheme:dark)").matches?1:0,
+    motion:window.matchMedia("(prefers-reduced-motion:reduce)").matches?1:0,
+    lang:(navigator.language||"").substring(0,5),
+    langs:navigator.languages?navigator.languages.slice(0,3).join(","):"",
+    tz:Intl.DateTimeFormat().resolvedOptions().timeZone||"",
+    cores:navigator.hardwareConcurrency||0,
+    ram:navigator.deviceMemory||0,
+    w:screen.width,h:screen.height,
+    dpr:Math.round((window.devicePixelRatio||1)*10)/10,
+    touch:"ontouchstart" in window?1:0,
+  };
+}
+
+// ── ENCODE + FINISH ───────────────────────────────────────────────────────────
 function finish(){
-  const vals=QUESTIONS.en.map(q=>answers[q.id]!==undefined?answers[q.id]:"x").join(",");
-  const raw=studentName+"|"+lang+"|"+vals;
+  const qs=QS.en;
+  const qvals=qs.map(q=>{
+    if(q.type==="rank")return answers["q11"]||rankOrder.join("");
+    if(q.type==="faction")return answers["q12"]||"0:50";
+    if(q.type==="emoji")return answers["q13"]||"0-1-2";
+    if(q.type==="fermi")return answers["q14"]||"0";
+    const v=answers[q.id];return v!==undefined?v:"x";
+  }).join(",");
+  const browserObj=collectBrowser();
+  const browserB64=btoa(unescape(encodeURIComponent(JSON.stringify(browserObj))));
+  const raw=studentName+"|"+lang+"|"+qvals+"|"+browserB64;
   const code=btoa(unescape(encodeURIComponent(raw)));
   document.getElementById("code-display").textContent=code;
   show("screen-done");
 }
+
 function copyCode(){
   const code=document.getElementById("code-display").textContent;
   navigator.clipboard.writeText(code).catch(()=>{});
